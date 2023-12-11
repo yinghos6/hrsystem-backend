@@ -1,4 +1,4 @@
-package com.example.hr_system.payload;
+package com.example.hr_system.payload.request;
 
 import lombok.*;
 

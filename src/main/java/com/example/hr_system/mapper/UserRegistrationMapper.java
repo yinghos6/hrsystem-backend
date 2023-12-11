@@ -1,7 +1,7 @@
 package com.example.hr_system.mapper;
 
 import com.example.hr_system.entity.User;
-import com.example.hr_system.payload.UserRegisterDto;
+import com.example.hr_system.payload.request.UserRegisterDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;

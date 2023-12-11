@@ -1,4 +1,4 @@
-package com.example.hr_system.payload;
+package com.example.hr_system.payload.request;
 
 import lombok.*;
 
@@ -7,7 +7,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoginRequest {
+public class UserLoginRequest {
 
     private String username;
 

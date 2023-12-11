@@ -1,19 +1,19 @@
 package com.example.hr_system.controller;
 
 
+import com.example.hr_system.entity.Role;
 import com.example.hr_system.entity.User;
-import com.example.hr_system.payload.UserRegisterDto;
+import com.example.hr_system.payload.request.UserInfoDto;
+import com.example.hr_system.payload.response.UserInfoResponse;
 import com.example.hr_system.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/v1/user/")
 public class UserController {
@@ -37,6 +37,12 @@ public class UserController {
        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
+    @GetMapping("/userInfo")
+    public ResponseEntity<UserInfoResponse>findUserInfoByUsername(@RequestBody UserInfoDto userInfoDto){
+        User user = userService.findUserByUsername(userInfoDto.getUsername());
+        List<Role> roleList = user.getRoles().stream().toList();
+        return new ResponseEntity<UserInfoResponse>(new UserInfoResponse(user.getUsername(),user.getEmail(),roleList),HttpStatus.OK);
+    }
 
 
 }

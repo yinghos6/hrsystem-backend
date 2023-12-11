@@ -1,6 +1,7 @@
 package com.example.hr_system.security;
 
 import com.example.hr_system.exception.HrSystemAPIException;
+import com.example.hr_system.service.auth.UserDetailslmpl;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -15,28 +16,52 @@ import java.util.Date;
 @Component
 public class JwtTokenProvider {
 
-    @Value("223310237197312893")
+    @Value("${app-jwt-secret}")
     private String jwtSecret;
 
-    @Value("60480000")
-    private String jwtExpirationTime;
+    @Value("${app-jwt-expiration-milliseconds}")
+    private long jwtExpirationTime;
 
     public String generationToken(Authentication authentication){
-        String username = authentication.getName();
+        UserDetailslmpl user = (UserDetailslmpl) authentication.getPrincipal();
 
-        Date currentDate = new Date();
+        long nowMillis = System.currentTimeMillis();
+        Date nowTime = new Date(nowMillis);
 
-        Date expireDate = new Date(currentDate.getTime()+jwtExpirationTime);
+        long expMills = System.currentTimeMillis() + jwtExpirationTime;
+        Date expTime = new Date(expMills);
+
 
         String token = Jwts.builder()
-                .setSubject(username)
-                .setIssuedAt(new Date())
-                .setExpiration(expireDate)
+                .setSubject(user.getUsername())
+                .setIssuedAt(nowTime)
+                .setExpiration(expTime)
                 .signWith(key())
                 .compact();
 
 
         return token;
+    }
+
+    public String refreshToken(String token){
+        final Date createdDate = new Date(new Date().getTime());
+        final Date expirationDate = calculateExpirationDate(createdDate);
+
+        final Claims claims = Jwts.parserBuilder()
+                .setSigningKey(key())
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+
+        claims.setIssuedAt(createdDate);
+        claims.setExpiration(expirationDate);
+
+        return Jwts.builder().setClaims(claims).signWith(key()).compact();
+
+    }
+
+    private Date calculateExpirationDate(Date createdDate){
+        return new Date(createdDate.getTime() + jwtExpirationTime);
     }
 
     private Key key(){

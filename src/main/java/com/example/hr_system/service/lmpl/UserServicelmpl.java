@@ -2,16 +2,15 @@ package com.example.hr_system.service.lmpl;
 
 import com.example.hr_system.entity.Role;
 import com.example.hr_system.entity.User;
-import com.example.hr_system.exception.HrSystemAPIException;
 import com.example.hr_system.exception.ResourceNotFoundException;
 import com.example.hr_system.mapper.UserRegistrationMapper;
-import com.example.hr_system.payload.UserRegisterDto;
+import com.example.hr_system.payload.request.UserRegisterDto;
+import com.example.hr_system.payload.request.UserLoginRequest;
 import com.example.hr_system.payload.response.RegisterResultResponse;
 import com.example.hr_system.repository.RoleRespository;
 import com.example.hr_system.repository.UserRepository;
 import com.example.hr_system.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +35,9 @@ public class UserServicelmpl implements UserService {
     public List<User> getAllUser() {
         return userRepository.findAll();
     }
+
+
+
 
     @Override
     public RegisterResultResponse registerNewUser(UserRegisterDto userRegisterDto) {
@@ -70,12 +72,23 @@ public class UserServicelmpl implements UserService {
     }
 
     @Override
+    public User findUserByUsername(String username) {
+       User user = userRepository.findByUsername(username);
+        return user;
+    }
+
+    @Override
     public Boolean registerExistByUsername(String username) {
         return null;
     }
 
     @Override
     public Boolean registerExistByEmail(String email) {
+        return null;
+    }
+
+    @Override
+    public String login(UserLoginRequest userLoginRequest) {
         return null;
     }
 

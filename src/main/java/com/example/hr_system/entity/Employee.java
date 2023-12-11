@@ -2,6 +2,9 @@ package com.example.hr_system.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CurrentTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 @Getter
@@ -25,13 +28,19 @@ public class Employee {
     private String english_Given_Name;
 
     @Column(name = "employment_date", nullable = false)
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date employment_date;
 
     @Column(name = "activeStatus", nullable = false)
     private Boolean active_Status;
 
     @Column(name = "resignation_date", nullable = true)
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date resignation_date;
+
+    @Column(name = "created_Time", nullable = false)
+    @CurrentTimestamp
+    private Date createdTime;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "department_id")

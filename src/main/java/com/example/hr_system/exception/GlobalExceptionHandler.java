@@ -1,6 +1,6 @@
 package com.example.hr_system.exception;
 
-import com.example.hr_system.payload.ErrorDetails;
+import com.example.hr_system.payload.response.ErrorDetails;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

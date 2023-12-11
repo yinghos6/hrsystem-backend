@@ -1,6 +1,7 @@
 package com.example.hr_system.service;
 
 import com.example.hr_system.entity.Employee;
+import com.example.hr_system.payload.request.EmployeeRegisterformDTO;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ public interface EmployeeService {
 
     Employee findEmployeeById(long id);
 
-    Employee CreateEmployee(Employee employee);
+    Employee CreateEmployee(EmployeeRegisterformDTO employeeRegisterformDTO);
 
 
 
