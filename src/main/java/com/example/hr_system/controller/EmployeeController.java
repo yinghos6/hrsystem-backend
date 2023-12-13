@@ -2,16 +2,20 @@ package com.example.hr_system.controller;
 
 import com.example.hr_system.entity.Employee;
 import com.example.hr_system.payload.request.EmployeeRegisterformDTO;
+import com.example.hr_system.payload.response.DeleteEmployeeResponse;
 import com.example.hr_system.payload.response.DropdownListResponse;
 import com.example.hr_system.payload.response.EmployeeRegisterformResponse;
 import com.example.hr_system.service.DepartmentService;
 import com.example.hr_system.service.EmployeeService;
 import com.example.hr_system.service.PositionService;
 import com.example.hr_system.service.ShopService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,10 +25,12 @@ import java.util.List;
 @RequestMapping("/api/v1/employee/")
 public class EmployeeController {
 
+    @Autowired
     private EmployeeService employeeService;
     private ShopService shopService;
 
     private DepartmentService departmentService;
+
 
     private PositionService positionService;
 
@@ -36,8 +42,14 @@ public class EmployeeController {
     }
 
     @GetMapping("/getAllEmployee")
-    public List<Employee> getAllEmployee(){
-        return employeeService.getAllEmployee();
+    public Page<Employee> getAllEmployee(@RequestParam(value = "page")Integer page,
+                                         @RequestParam(value = "size")Integer size
+    ){
+
+        Pageable pageable = PageRequest.of(page  , size);
+        Page<Employee> pagedResult = employeeService.getAllEmployee(pageable);
+        return pagedResult;
+
     }
 
 
@@ -76,4 +88,14 @@ public class EmployeeController {
         return new ResponseEntity<EmployeeRegisterformResponse>(employeeResponse, HttpStatus.CREATED);
     }
 
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<DeleteEmployeeResponse> deleteEmployeeById(@PathVariable(value = "id")long id){
+        employeeService.DeleteEmployeeByID(id);
+        DeleteEmployeeResponse response = new DeleteEmployeeResponse();
+        response.setCode(200L);
+        response.setStatus("Deleted");
+        response.setMessage("The user had been deleted successfully.");
+        return new ResponseEntity<DeleteEmployeeResponse>(response, HttpStatus.OK);
+    }
 }

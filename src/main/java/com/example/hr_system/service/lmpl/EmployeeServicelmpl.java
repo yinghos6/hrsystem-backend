@@ -6,20 +6,17 @@ import com.example.hr_system.entity.Position;
 import com.example.hr_system.entity.Shop;
 import com.example.hr_system.exception.ResourceNotFoundException;
 import com.example.hr_system.payload.request.EmployeeRegisterformDTO;
-import com.example.hr_system.repository.DepartmentRepository;
 import com.example.hr_system.repository.EmployeeRepository;
-import com.example.hr_system.repository.PositionRepository;
-import com.example.hr_system.repository.ShopRepository;
 import com.example.hr_system.service.DepartmentService;
 import com.example.hr_system.service.EmployeeService;
 import com.example.hr_system.service.PositionService;
 import com.example.hr_system.service.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class EmployeeServicelmpl implements EmployeeService {
@@ -42,15 +39,16 @@ public class EmployeeServicelmpl implements EmployeeService {
         this.employeeRepository = employeeRepository;
     }
 
+
     @Override
-    public List<Employee> getAllEmployee() {
-        return employeeRepository.findAll();
+    public Page<Employee> getAllEmployee(Pageable pageable) {
+       return employeeRepository.findAll(pageable);
     }
 
     @Override
     public Employee findEmployeeById(long id) {
         Employee employee = employeeRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Employee","id","id"));
-        return employee;
+         return employee;
     }
 
     @Override
@@ -77,6 +75,15 @@ public class EmployeeServicelmpl implements EmployeeService {
         employeeRepository.save(newEmployee);
         return newEmployee;
     }
+
+
+
+
+    @Override
+    public void DeleteEmployeeByID(Long id) {
+        employeeRepository.deleteById(id);
+   }
+
 
 
 }
