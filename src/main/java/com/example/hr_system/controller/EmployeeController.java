@@ -43,13 +43,18 @@ public class EmployeeController {
 
     @GetMapping("/getAllEmployee")
     public Page<Employee> getAllEmployee(@RequestParam(value = "page")Integer page,
-                                         @RequestParam(value = "size")Integer size
+                                         @RequestParam(value = "size")Integer size,
+                                         @RequestParam(value = "sortField")String sortField,
+                                         @RequestParam(value = "sortDir")String sortDir,
+                                         @RequestParam(value = "keyword")String keyword
     ){
 
-        Pageable pageable = PageRequest.of(page  , size);
-        Page<Employee> pagedResult = employeeService.getAllEmployee(pageable);
-        return pagedResult;
 
+            Pageable pageable = PageRequest.of(page  , size, Sort.by(sortDir.equals("asc")?Sort.Direction.ASC:Sort.Direction.DESC, sortField));
+            Page<Employee> pagedResult = employeeService.getAllEmployee(keyword,pageable);
+
+
+        return pagedResult;
     }
 
 

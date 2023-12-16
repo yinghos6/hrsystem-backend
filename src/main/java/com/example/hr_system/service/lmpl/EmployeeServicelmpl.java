@@ -40,9 +40,14 @@ public class EmployeeServicelmpl implements EmployeeService {
     }
 
 
+//    @Override
+//    public Page<Employee> getAllEmployee(Pageable pageable) {
+//       return employeeRepository.findAll(pageable);
+//    }
+
     @Override
-    public Page<Employee> getAllEmployee(Pageable pageable) {
-       return employeeRepository.findAll(pageable);
+    public Page<Employee> getAllEmployee(String keyword,Pageable pageable) {
+        return employeeRepository.findAllByKeyword(keyword,pageable);
     }
 
     @Override

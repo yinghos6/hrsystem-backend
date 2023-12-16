@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface EmployeeService {
 
-    Page<Employee> getAllEmployee(Pageable pageable);
+    Page<Employee> getAllEmployee(String keyword,Pageable pageable);
 
     Employee findEmployeeById(long id);
 
