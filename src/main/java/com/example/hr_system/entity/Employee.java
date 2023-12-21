@@ -6,6 +6,8 @@ import org.hibernate.annotations.CurrentTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -53,5 +55,13 @@ public class Employee {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "shop_id")
     private Shop shop;
+
+    @OneToMany(mappedBy = "employee",cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<LeaveBalance> leaveBalances = new HashSet<>();
+
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<LeaveRecord> leaveRecords = new HashSet<>();
+
+
 
 }

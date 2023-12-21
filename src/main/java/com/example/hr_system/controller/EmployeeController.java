@@ -1,10 +1,9 @@
 package com.example.hr_system.controller;
 
 import com.example.hr_system.entity.Employee;
+import com.example.hr_system.payload.request.EmployeeEdit;
 import com.example.hr_system.payload.request.EmployeeRegisterformDTO;
-import com.example.hr_system.payload.response.DeleteEmployeeResponse;
-import com.example.hr_system.payload.response.DropdownListResponse;
-import com.example.hr_system.payload.response.EmployeeRegisterformResponse;
+import com.example.hr_system.payload.response.*;
 import com.example.hr_system.service.DepartmentService;
 import com.example.hr_system.service.EmployeeService;
 import com.example.hr_system.service.PositionService;
@@ -100,7 +99,30 @@ public class EmployeeController {
         DeleteEmployeeResponse response = new DeleteEmployeeResponse();
         response.setCode(200L);
         response.setStatus("Deleted");
-        response.setMessage("The user had been deleted successfully.");
+        response.setMessage("The employee had been deleted successfully.");
         return new ResponseEntity<DeleteEmployeeResponse>(response, HttpStatus.OK);
     }
+
+    @PutMapping("/updateStatus/{id}")
+    public ResponseEntity<UpdateEmployeeResponse> updateEmployeeStatusById(@PathVariable(value = "id")long id){
+        employeeService.UpdateEmployeeStatusById(id);
+        UpdateEmployeeResponse response = new UpdateEmployeeResponse();
+        response.setCode(200L);
+        response.setStatus("Updated");
+        response.setMessage("The employee had been updated successfully.");
+
+        return new ResponseEntity<UpdateEmployeeResponse>(response, HttpStatus.OK);
+    }
+
+
+    @PutMapping("/editProfile")
+    public ResponseEntity<MessageResponse> EditEmployeeProfileById(@RequestBody EmployeeEdit employeeEdit){
+        employeeService.editEmployeeProfile(employeeEdit);
+        MessageResponse response = new MessageResponse();
+        response.setCode(200L);
+        response.setStatus("Edited");
+        response.setMessage("The employee had been edited successfully.");
+        return new ResponseEntity<MessageResponse>(response, HttpStatus.OK);
+    }
+
 }

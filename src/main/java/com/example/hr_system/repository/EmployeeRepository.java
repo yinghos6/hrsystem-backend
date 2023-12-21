@@ -17,4 +17,6 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     @Query(nativeQuery = true, value = "SELECT * from  employee e where e.en_surname or e.en_given_name like %?1%")
     public Page<Employee> findAllByKeyword(String keyword, Pageable pageable);
 
+    @Query(nativeQuery = true, value = "UPDATE employee e set e.active_status = if(e.active_status,0,1)  where e.id = ?1")
+    public void UpdateEmployeeStatus(Long employeeId);
 }
