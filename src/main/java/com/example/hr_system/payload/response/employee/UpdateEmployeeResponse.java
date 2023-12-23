@@ -1,9 +1,10 @@
-package com.example.hr_system.payload.response;
+package com.example.hr_system.payload.response.employee;
 
 import lombok.Data;
 
 @Data
-public class DeleteEmployeeResponse {
+public class UpdateEmployeeResponse {
+
     private Long code;
     private String status;
 

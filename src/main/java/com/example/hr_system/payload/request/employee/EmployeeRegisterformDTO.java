@@ -1,4 +1,4 @@
-package com.example.hr_system.payload.request;
+package com.example.hr_system.payload.request.employee;
 
 import com.example.hr_system.entity.Department;
 import com.example.hr_system.entity.Position;

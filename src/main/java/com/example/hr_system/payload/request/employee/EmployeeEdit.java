@@ -1,4 +1,4 @@
-package com.example.hr_system.payload.request;
+package com.example.hr_system.payload.request.employee;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;

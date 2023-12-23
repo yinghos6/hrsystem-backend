@@ -1,9 +1,13 @@
 package com.example.hr_system.controller;
 
 import com.example.hr_system.entity.Employee;
-import com.example.hr_system.payload.request.EmployeeEdit;
-import com.example.hr_system.payload.request.EmployeeRegisterformDTO;
+import com.example.hr_system.payload.request.employee.EmployeeEdit;
+import com.example.hr_system.payload.request.employee.EmployeeRegisterformDTO;
 import com.example.hr_system.payload.response.*;
+import com.example.hr_system.payload.response.employee.DeleteEmployeeResponse;
+import com.example.hr_system.payload.response.employee.DropdownListResponse;
+import com.example.hr_system.payload.response.employee.EmployeeRegisterformResponse;
+import com.example.hr_system.payload.response.employee.UpdateEmployeeResponse;
 import com.example.hr_system.service.DepartmentService;
 import com.example.hr_system.service.EmployeeService;
 import com.example.hr_system.service.PositionService;
@@ -16,8 +20,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController

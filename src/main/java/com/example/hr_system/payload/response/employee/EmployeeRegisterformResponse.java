@@ -1,4 +1,4 @@
-package com.example.hr_system.payload.response;
+package com.example.hr_system.payload.response.employee;
 
 import lombok.Data;
 

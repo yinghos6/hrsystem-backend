@@ -6,7 +6,7 @@ import com.example.hr_system.exception.ResourceNotFoundException;
 import com.example.hr_system.mapper.UserRegistrationMapper;
 import com.example.hr_system.payload.request.UserRegisterDto;
 import com.example.hr_system.payload.request.UserLoginRequest;
-import com.example.hr_system.payload.response.RegisterResultResponse;
+import com.example.hr_system.payload.response.employee.RegisterResultResponse;
 import com.example.hr_system.repository.RoleRespository;
 import com.example.hr_system.repository.UserRepository;
 import com.example.hr_system.service.UserService;

@@ -2,6 +2,7 @@ package com.example.hr_system.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.CurrentTimestamp;
 
 import java.util.Date;
 

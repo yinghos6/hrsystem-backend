@@ -3,7 +3,7 @@ package com.example.hr_system.controller;
 
 import com.example.hr_system.entity.Role;
 import com.example.hr_system.entity.User;
-import com.example.hr_system.payload.request.UserInfoDto;
+import com.example.hr_system.payload.request.employee.UserInfoDto;
 import com.example.hr_system.payload.response.UserInfoResponse;
 import com.example.hr_system.service.UserService;
 import jakarta.validation.Valid;

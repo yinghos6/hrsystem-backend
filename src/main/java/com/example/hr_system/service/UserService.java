@@ -3,7 +3,7 @@ package com.example.hr_system.service;
 import com.example.hr_system.entity.User;
 import com.example.hr_system.payload.request.UserRegisterDto;
 import com.example.hr_system.payload.request.UserLoginRequest;
-import com.example.hr_system.payload.response.RegisterResultResponse;
+import com.example.hr_system.payload.response.employee.RegisterResultResponse;
 
 import java.util.List;
 

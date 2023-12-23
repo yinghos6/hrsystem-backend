@@ -1,8 +1,8 @@
 package com.example.hr_system.service;
 
 import com.example.hr_system.entity.Employee;
-import com.example.hr_system.payload.request.EmployeeEdit;
-import com.example.hr_system.payload.request.EmployeeRegisterformDTO;
+import com.example.hr_system.payload.request.employee.EmployeeEdit;
+import com.example.hr_system.payload.request.employee.EmployeeRegisterformDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -19,6 +19,8 @@ public interface EmployeeService {
     void UpdateEmployeeStatusById(Long id);
 
     void editEmployeeProfile(EmployeeEdit employeeEdit);
+
+
 
 
 }
