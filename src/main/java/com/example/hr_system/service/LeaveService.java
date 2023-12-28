@@ -12,5 +12,5 @@ public interface LeaveService {
 
     void createNewLeaveBalance(Long EmployeeId, EmployeeLeaveBalanceDTO employeeLeaveBalanceDTO);
 
-
+    void createNewLeaveBalanceForNewEmployee(long EmployeeId);
 }

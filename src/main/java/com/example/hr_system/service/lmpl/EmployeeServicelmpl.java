@@ -1,9 +1,6 @@
 package com.example.hr_system.service.lmpl;
 
-import com.example.hr_system.entity.Department;
-import com.example.hr_system.entity.Employee;
-import com.example.hr_system.entity.Position;
-import com.example.hr_system.entity.Shop;
+import com.example.hr_system.entity.*;
 import com.example.hr_system.exception.ResourceNotFoundException;
 import com.example.hr_system.payload.request.employee.EmployeeEdit;
 import com.example.hr_system.payload.request.employee.EmployeeRegisterformDTO;
@@ -16,6 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 public class EmployeeServicelmpl implements EmployeeService {
@@ -47,6 +47,11 @@ public class EmployeeServicelmpl implements EmployeeService {
     @Override
     public Page<Employee> getAllEmployee(String keyword,Pageable pageable) {
         return employeeRepository.findAllByKeyword(keyword,pageable);
+    }
+
+    @Override
+    public Page<Employee> getAllEmployeeByShop(Long shopID, Pageable pageable) {
+        return employeeRepository.findAllByShop(shopID, pageable);
     }
 
     @Override
@@ -113,6 +118,18 @@ public class EmployeeServicelmpl implements EmployeeService {
         employee.setDepartment(department);
 
         employeeRepository.save(employee);
+    }
+
+    @Override
+    public Set<LeaveBalance> getLeaveBalanceByEmployeeID(Long employeeID) {
+
+        Employee employee = employeeRepository.findById(employeeID).orElseThrow(()->new RuntimeException("The user is not existed."));
+
+
+
+        Set<LeaveBalance> employeeLeaveBalanceSet = employee.getLeaveBalances();
+
+        return employeeLeaveBalanceSet;
     }
 
 

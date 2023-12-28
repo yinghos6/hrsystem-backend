@@ -1,5 +1,6 @@
 package com.example.hr_system.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CurrentTimestamp;
@@ -11,6 +12,7 @@ import java.util.Set;
 
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "employee")

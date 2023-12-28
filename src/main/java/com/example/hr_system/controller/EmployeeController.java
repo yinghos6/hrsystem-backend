@@ -8,10 +8,7 @@ import com.example.hr_system.payload.response.employee.DeleteEmployeeResponse;
 import com.example.hr_system.payload.response.employee.DropdownListResponse;
 import com.example.hr_system.payload.response.employee.EmployeeRegisterformResponse;
 import com.example.hr_system.payload.response.employee.UpdateEmployeeResponse;
-import com.example.hr_system.service.DepartmentService;
-import com.example.hr_system.service.EmployeeService;
-import com.example.hr_system.service.PositionService;
-import com.example.hr_system.service.ShopService;
+import com.example.hr_system.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -28,6 +25,9 @@ public class EmployeeController {
 
     @Autowired
     private EmployeeService employeeService;
+    @Autowired
+    private LeaveService leaveService;
+
     private ShopService shopService;
 
     private DepartmentService departmentService;
@@ -58,6 +58,19 @@ public class EmployeeController {
         return pagedResult;
     }
 
+    @GetMapping("/getAllEmployeeByShop/{shop_id}")
+    public Page<Employee> getAllEmployeeByShop(@RequestParam(value = "page")Integer page,
+                                               @RequestParam(value = "size")Integer size,
+                                               @RequestParam(value = "sortField")String sortField,
+                                               @RequestParam(value = "sortDir")String sortDir,
+                                               @PathVariable(value = "shop_id")long shop_id
+    ){
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortDir.equals("asc")?Sort.Direction.ASC:Sort.Direction.DESC, sortField));
+        Page<Employee> pageResult = employeeService.getAllEmployeeByShop(shop_id, pageable);
+
+        return pageResult;
+    }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<Employee> findEmployeeById(@PathVariable(value = "id")long id){
@@ -84,12 +97,15 @@ public class EmployeeController {
 
         Employee newEmployee = employeeService.CreateEmployee(employeeRegisterformDTO);
 
+
+
         EmployeeRegisterformResponse employeeResponse = new EmployeeRegisterformResponse();
 
         employeeResponse.setCode("200");
         employeeResponse.setStatus("success, The created time is " + newEmployee.getCreatedTime());
         employeeResponse.setMessage("The user: "+ newEmployee.getEnglish_Surname() +" "+newEmployee.getEnglish_Given_Name() +" is created successfully." );
 
+        leaveService.createNewLeaveBalanceForNewEmployee(newEmployee.getId());
 
         return new ResponseEntity<EmployeeRegisterformResponse>(employeeResponse, HttpStatus.CREATED);
     }

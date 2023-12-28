@@ -1,6 +1,7 @@
 package com.example.hr_system;
 
 import com.example.hr_system.entity.Employee;
+import com.example.hr_system.entity.LeaveBalance;
 import com.example.hr_system.repository.EmployeeRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.test.annotation.Rollback;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -36,5 +39,14 @@ public class EmployeeRepoTest {
         Page<Employee> page = employeeRepository.findAllByKeyword(keyword, pageable);
         List<Employee> listEmployee = page.getContent();
         System.out.println(listEmployee);
+    }
+
+    @Test
+    public void testEmployeeBalance(){
+        final long employeeID = 42;
+        Employee employee = employeeRepository.findById(employeeID).orElseThrow(()->new RuntimeException("the user is not existed."));
+
+        Set<LeaveBalance> leaveBalanceSet = employee.getLeaveBalances();
+        System.out.println(leaveBalanceSet);
     }
 }

@@ -1,9 +1,11 @@
 package com.example.hr_system.controller;
 
 
+import com.example.hr_system.entity.LeaveBalance;
 import com.example.hr_system.entity.LeaveType;
 import com.example.hr_system.payload.request.leave.EmployeeLeaveBalanceDTO;
 import com.example.hr_system.payload.response.MessageResponse;
+import com.example.hr_system.service.EmployeeService;
 import com.example.hr_system.service.LeaveService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -20,6 +23,9 @@ public class LeaveController {
 
     @Autowired
     private LeaveService leaveService;
+
+    @Autowired
+    private EmployeeService employeeService;
 
     public LeaveController(LeaveService leaveService) {
         this.leaveService = leaveService;
@@ -41,6 +47,13 @@ public class LeaveController {
         response.setMessage("The leave balance is updated for the employee.");
 
         return new ResponseEntity<MessageResponse>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/leaveRecord")
+    public ResponseEntity getEmployeeLeaveRecord(@PathVariable long id){
+        Set<LeaveBalance> allRecord =  employeeService.getLeaveBalanceByEmployeeID(id);
+
+        return new ResponseEntity<>(allRecord, HttpStatus.OK);
     }
 
 
