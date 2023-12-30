@@ -1,13 +1,9 @@
 package com.example.hr_system.service.lmpl;
 
-import com.example.hr_system.entity.Employee;
-import com.example.hr_system.entity.LeaveBalance;
-import com.example.hr_system.entity.LeaveType;
+import com.example.hr_system.entity.*;
 import com.example.hr_system.payload.request.leave.EmployeeLeaveBalanceDTO;
-import com.example.hr_system.repository.EmployeeRepository;
-import com.example.hr_system.repository.LeaveBalanceRepository;
-import com.example.hr_system.repository.LeaveRecordRepository;
-import com.example.hr_system.repository.LeaveTypeRepository;
+import com.example.hr_system.payload.request.leave.EmployeeLeaveRecordDTO;
+import com.example.hr_system.repository.*;
 import com.example.hr_system.service.LeaveService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,18 +28,28 @@ public class LeaveServicelmpl implements LeaveService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
+    @Autowired
+    private LeaveStatusRepository leaveStatusRepository;
+
     public LeaveServicelmpl() {
     }
 
-    public LeaveServicelmpl(LeaveBalanceRepository leaveBalanceRepository, LeaveTypeRepository leaveTypeRepository, LeaveRecordRepository leaveRecordRepository) {
+    public LeaveServicelmpl(LeaveBalanceRepository leaveBalanceRepository, LeaveTypeRepository leaveTypeRepository, LeaveRecordRepository leaveRecordRepository, EmployeeRepository employeeRepository, LeaveStatusRepository leaveStatusRepository) {
         this.leaveBalanceRepository = leaveBalanceRepository;
         this.leaveTypeRepository = leaveTypeRepository;
         this.leaveRecordRepository = leaveRecordRepository;
+        this.employeeRepository = employeeRepository;
+        this.leaveStatusRepository = leaveStatusRepository;
     }
 
     @Override
     public List<LeaveType> getAllLeaveType() {
         return leaveTypeRepository.findAll();
+    }
+
+    @Override
+    public List<LeaveStatus> getAllLeaveStatus() {
+        return leaveStatusRepository.findAll();
     }
 
     @Override
@@ -106,4 +112,28 @@ public class LeaveServicelmpl implements LeaveService {
         employeeRepository.save(employee);
 
     }
+
+    @Override
+    public LeaveRecord createNewLeaveRecord(Long EmployeeId, EmployeeLeaveRecordDTO employeeLeaveRecordDTO) {
+
+        LeaveRecord newLeaveRecord = new LeaveRecord();
+        newLeaveRecord.setLeaveYear(employeeLeaveRecordDTO.getLeaveYear());
+        newLeaveRecord.setCountedDays(employeeLeaveRecordDTO.getLeave_counted_days());
+        newLeaveRecord.setLeaveStartDate(employeeLeaveRecordDTO.getLeaveStartDate());
+        newLeaveRecord.setLeaveEndDate(employeeLeaveRecordDTO.getLeaveEndDate());
+
+        LeaveType selectedLeaveType = leaveTypeRepository.findById(employeeLeaveRecordDTO.getLeaveTypeID()).orElseThrow(()->new RuntimeException("The leave type is not found."));
+        newLeaveRecord.setLeaveType(selectedLeaveType);
+
+        Employee employee = employeeRepository.findById(EmployeeId).orElseThrow(()->new RuntimeException("The user is not found."));
+        newLeaveRecord.setEmployee(employee);
+
+        leaveRecordRepository.save(newLeaveRecord);
+        employeeRepository.save(employee);
+
+        return newLeaveRecord;
+
+    }
+
+
 }

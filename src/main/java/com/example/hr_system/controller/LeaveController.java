@@ -2,8 +2,10 @@ package com.example.hr_system.controller;
 
 
 import com.example.hr_system.entity.LeaveBalance;
+import com.example.hr_system.entity.LeaveStatus;
 import com.example.hr_system.entity.LeaveType;
 import com.example.hr_system.payload.request.leave.EmployeeLeaveBalanceDTO;
+import com.example.hr_system.payload.request.leave.EmployeeLeaveRecordDTO;
 import com.example.hr_system.payload.response.MessageResponse;
 import com.example.hr_system.service.EmployeeService;
 import com.example.hr_system.service.LeaveService;
@@ -36,6 +38,11 @@ public class LeaveController {
         return leaveService.getAllLeaveType();
     }
 
+    @GetMapping("/leaveStatusAll")
+    public List<LeaveStatus> getAllLeaveStatus(){
+        return leaveService.getAllLeaveStatus();
+    }
+
 
     @PostMapping("/newLeaveBalacne/{id}")
     public ResponseEntity<MessageResponse> craeteNewEmployeeLeaveBalance(@PathVariable(value = "id")long id, @RequestBody EmployeeLeaveBalanceDTO employeeLeaveBalanceDTO){
@@ -54,6 +61,18 @@ public class LeaveController {
         Set<LeaveBalance> allRecord =  employeeService.getLeaveBalanceByEmployeeID(id);
 
         return new ResponseEntity<>(allRecord, HttpStatus.OK);
+    }
+
+    @PostMapping("/{id}/newRecord")
+    public ResponseEntity<MessageResponse> createNewLeaveRecord(@PathVariable(value = "id")long id, @RequestBody EmployeeLeaveRecordDTO employeeLeaveRecordDTO){
+        leaveService.createNewLeaveRecord(id, employeeLeaveRecordDTO);
+
+        MessageResponse response = new MessageResponse();
+        response.setCode(200L);
+        response.setStatus("Created");
+        response.setMessage("The leave record is created successfully.");
+
+        return new ResponseEntity<MessageResponse>(response, HttpStatus.CREATED);
     }
 
 
