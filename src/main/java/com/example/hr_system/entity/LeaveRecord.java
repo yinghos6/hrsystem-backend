@@ -42,11 +42,11 @@ public class LeaveRecord {
     @JsonIgnore
     private Employee employee;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "leaveType_id")
     private LeaveType leaveType;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "leaveStatus_id")
     private LeaveStatus leaveStatus;
 

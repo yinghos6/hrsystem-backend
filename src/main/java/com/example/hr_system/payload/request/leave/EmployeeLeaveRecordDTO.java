@@ -11,6 +11,8 @@ public class EmployeeLeaveRecordDTO {
 
     private Long leaveTypeID;
 
+    private Long leaveStatusID;
+
     private String leaveYear;
 
     private Date leaveStartDate;

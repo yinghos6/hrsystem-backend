@@ -6,6 +6,8 @@ import com.example.hr_system.payload.request.leave.EmployeeLeaveRecordDTO;
 import com.example.hr_system.repository.*;
 import com.example.hr_system.service.LeaveService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -24,6 +26,7 @@ public class LeaveServicelmpl implements LeaveService {
 
     @Autowired
     private LeaveRecordRepository leaveRecordRepository;
+
 
     @Autowired
     private EmployeeRepository employeeRepository;
@@ -125,6 +128,9 @@ public class LeaveServicelmpl implements LeaveService {
         LeaveType selectedLeaveType = leaveTypeRepository.findById(employeeLeaveRecordDTO.getLeaveTypeID()).orElseThrow(()->new RuntimeException("The leave type is not found."));
         newLeaveRecord.setLeaveType(selectedLeaveType);
 
+        LeaveStatus selectedleaveStatus = leaveStatusRepository.findById(employeeLeaveRecordDTO.getLeaveStatusID()).orElseThrow(()->new RuntimeException("The leave status is not found"));
+        newLeaveRecord.setLeaveStatus(selectedleaveStatus);
+
         Employee employee = employeeRepository.findById(EmployeeId).orElseThrow(()->new RuntimeException("The user is not found."));
         newLeaveRecord.setEmployee(employee);
 
@@ -133,6 +139,12 @@ public class LeaveServicelmpl implements LeaveService {
 
         return newLeaveRecord;
 
+    }
+
+    @Override
+    public Page<LeaveRecord> getAllLeaveRecordByEmployeeID(Long employeeID, Pageable pageable) {
+
+       return leaveRecordRepository.findAllRecordByEmployeeID(employeeID, pageable);
     }
 
 

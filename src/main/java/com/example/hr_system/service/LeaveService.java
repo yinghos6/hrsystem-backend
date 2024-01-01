@@ -6,6 +6,8 @@ import com.example.hr_system.entity.LeaveStatus;
 import com.example.hr_system.entity.LeaveType;
 import com.example.hr_system.payload.request.leave.EmployeeLeaveBalanceDTO;
 import com.example.hr_system.payload.request.leave.EmployeeLeaveRecordDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -20,4 +22,6 @@ public interface LeaveService {
     void createNewLeaveBalanceForNewEmployee(long EmployeeId);
 
     LeaveRecord createNewLeaveRecord(Long EmployeeId, EmployeeLeaveRecordDTO employeeLeaveRecordDTO);
+
+    Page<LeaveRecord> getAllLeaveRecordByEmployeeID(Long employeeID, Pageable pageable);
 }
