@@ -24,4 +24,6 @@ public interface LeaveService {
     LeaveRecord createNewLeaveRecord(Long EmployeeId, EmployeeLeaveRecordDTO employeeLeaveRecordDTO);
 
     Page<LeaveRecord> getAllLeaveRecordByEmployeeID(Long employeeID, Pageable pageable);
+
+
 }

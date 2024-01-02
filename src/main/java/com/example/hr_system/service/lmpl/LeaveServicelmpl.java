@@ -125,11 +125,52 @@ public class LeaveServicelmpl implements LeaveService {
         newLeaveRecord.setLeaveStartDate(employeeLeaveRecordDTO.getLeaveStartDate());
         newLeaveRecord.setLeaveEndDate(employeeLeaveRecordDTO.getLeaveEndDate());
 
+        LeaveBalance leaveBalance = leaveBalanceRepository.findLeaveBalanceByEmployeeID(EmployeeId);
+
         LeaveType selectedLeaveType = leaveTypeRepository.findById(employeeLeaveRecordDTO.getLeaveTypeID()).orElseThrow(()->new RuntimeException("The leave type is not found."));
         newLeaveRecord.setLeaveType(selectedLeaveType);
 
         LeaveStatus selectedleaveStatus = leaveStatusRepository.findById(employeeLeaveRecordDTO.getLeaveStatusID()).orElseThrow(()->new RuntimeException("The leave status is not found"));
         newLeaveRecord.setLeaveStatus(selectedleaveStatus);
+
+        String LeaveTypeDescription = selectedLeaveType.getLeaveDescription();
+        String LeaveStatusName = selectedleaveStatus.getName();
+
+        if(LeaveStatusName.equals("Approved")){
+            if (LeaveTypeDescription.equals("AL")){
+                Long countedDays = employeeLeaveRecordDTO.getLeave_counted_days();
+                Long numberAL = leaveBalance.getBalanceAnnualLeave();
+                Long newAL = numberAL - countedDays;
+                leaveBalance.setBalanceAnnualLeave(newAL);
+
+                Long countedAL = leaveBalance.getAppliedAnnualLeave();
+                Long newCountedAL = countedAL + countedDays;
+                leaveBalance.setAppliedAnnualLeave(newCountedAL);
+            }
+            if(LeaveTypeDescription.equals("SL")){
+                Long countedDays = employeeLeaveRecordDTO.getLeave_counted_days();
+                Long numberSL = leaveBalance.getBalanceSickLeave();
+                Long newSL = numberSL - countedDays;
+                leaveBalance.setBalanceSickLeave(newSL);
+
+                Long countedSL = leaveBalance.getAppliedSickLeave();
+                Long newCountedSL = countedSL + countedDays;
+                leaveBalance.setAppliedSickLeave(newCountedSL);
+            }
+            if(LeaveTypeDescription.equals("SPL")){
+                Long countedDays = employeeLeaveRecordDTO.getLeave_counted_days();
+                Long numberSPL = leaveBalance.getBalanceSpecialLeave();
+                Long newSPL = numberSPL - countedDays;
+                leaveBalance.setBalanceSpecialLeave(newSPL);
+
+                Long countedSPL = leaveBalance.getBalanceSpecialLeave();
+                Long newCountedSPL = countedSPL+countedDays;
+                leaveBalance.setAppliedSpecialLeave(newCountedSPL);
+            }
+
+        } else{
+            System.out.println("The leave status is pending and no need to change the total.");
+        }
 
         Employee employee = employeeRepository.findById(EmployeeId).orElseThrow(()->new RuntimeException("The user is not found."));
         newLeaveRecord.setEmployee(employee);
@@ -146,6 +187,7 @@ public class LeaveServicelmpl implements LeaveService {
 
        return leaveRecordRepository.findAllRecordByEmployeeID(employeeID, pageable);
     }
+
 
 
 }
