@@ -27,6 +27,6 @@ public interface EmployeeService {
 
     Set<LeaveBalance> getLeaveBalanceByEmployeeID(Long employeeID);
 
-
+    Long countTotalEmployeeByActiveStatus(Long activeStatusID);
 
 }

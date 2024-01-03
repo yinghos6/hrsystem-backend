@@ -15,6 +15,5 @@ public class PasswordGeneratorEncoder {
         final boolean matches = encoder.matches(pass, passHash);
         System.out.println(matches);
 
-
     }
 }

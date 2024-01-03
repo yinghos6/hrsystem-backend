@@ -22,4 +22,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
     @Query(nativeQuery = true, value = "SELECT * from employee e where e.shop_id = ?1")
     public Page<Employee> findAllByShop(Long shopID, Pageable pageable);
+
+    @Query(nativeQuery = true, value = "SELECT  COUNT(*) from employee e where e.active_status = ?1")
+    public Long countEmployeeByActiveStatus(Long activeStatusID);
 }

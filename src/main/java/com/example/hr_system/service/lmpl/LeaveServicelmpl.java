@@ -163,7 +163,7 @@ public class LeaveServicelmpl implements LeaveService {
                 Long newSPL = numberSPL - countedDays;
                 leaveBalance.setBalanceSpecialLeave(newSPL);
 
-                Long countedSPL = leaveBalance.getBalanceSpecialLeave();
+                Long countedSPL = leaveBalance.getAppliedSpecialLeave();
                 Long newCountedSPL = countedSPL+countedDays;
                 leaveBalance.setAppliedSpecialLeave(newCountedSPL);
             }

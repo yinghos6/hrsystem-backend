@@ -4,10 +4,7 @@ import com.example.hr_system.entity.Employee;
 import com.example.hr_system.payload.request.employee.EmployeeEdit;
 import com.example.hr_system.payload.request.employee.EmployeeRegisterformDTO;
 import com.example.hr_system.payload.response.*;
-import com.example.hr_system.payload.response.employee.DeleteEmployeeResponse;
-import com.example.hr_system.payload.response.employee.DropdownListResponse;
-import com.example.hr_system.payload.response.employee.EmployeeRegisterformResponse;
-import com.example.hr_system.payload.response.employee.UpdateEmployeeResponse;
+import com.example.hr_system.payload.response.employee.*;
 import com.example.hr_system.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -143,4 +140,17 @@ public class EmployeeController {
         return new ResponseEntity<MessageResponse>(response, HttpStatus.OK);
     }
 
+    @GetMapping("/total/{statusID}")
+    public ResponseEntity<GetTotalEmployeeResponse> getTotalEmployeeByActiveStatus(@PathVariable(value = "statusID") long statusID){
+        Long totalNumber = employeeService.countTotalEmployeeByActiveStatus(statusID);
+        GetTotalEmployeeResponse response = new GetTotalEmployeeResponse();
+        response.setCode(200L);
+        if(statusID == 0){
+            response.setStatus("There are the total employee of resigned employee,");
+        }else{
+            response.setStatus("There are the total employee of active employee.");
+        }
+        response.setTotalNumber(totalNumber);
+        return new ResponseEntity<GetTotalEmployeeResponse>(response, HttpStatus.OK);
+    }
 }

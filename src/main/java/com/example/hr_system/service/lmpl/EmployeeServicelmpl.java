@@ -132,5 +132,10 @@ public class EmployeeServicelmpl implements EmployeeService {
         return employeeLeaveBalanceSet;
     }
 
+    @Override
+    public Long countTotalEmployeeByActiveStatus(Long activeStatusID) {
+        return employeeRepository.countEmployeeByActiveStatus(activeStatusID);
+    }
+
 
 }
