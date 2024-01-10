@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -88,11 +89,11 @@ public class PayrollServicelmpl implements PayrollService {
 
 
         payrollRecord.setBasisSalary(payrollRecordDTO.getBasisSalary());
-        payrollRecord.setBonus(payrollRecord.getBonus());
-        payrollRecord.setNetPayment(payrollRecord.getNetPayment());
-        payrollRecord.setTotalAmount(payrollRecord.getTotalAmount());
-        payrollRecord.setEmployeeContribution(payrollRecord.getEmployeeContribution());
-        payrollRecord.setEmployerContribution(payrollRecord.getEmployerContribution());
+        payrollRecord.setBonus(payrollRecordDTO.getBonus());
+        payrollRecord.setNetPayment(payrollRecordDTO.getNet_payment());
+        payrollRecord.setTotalAmount(payrollRecordDTO.getTotal_amount());
+        payrollRecord.setEmployeeContribution(payrollRecordDTO.getEmployee_mpf());
+        payrollRecord.setEmployerContribution(payrollRecordDTO.getEmployer_mpf());
         payrollRecord.setCreatedDate(newDate);
         payrollRecord.setUpdatedDate(newDate);
 
@@ -102,5 +103,10 @@ public class PayrollServicelmpl implements PayrollService {
 
         payrollRecordRepository.save(payrollRecord);
         employeeRepository.save(employee);
+    }
+
+    @Override
+    public List<PayrollRecord> findAllPayrollRecordByEmployeeID(Long employeeID) {
+        return payrollRecordRepository.findPayrollRecordByEmployeeID(employeeID);
     }
 }

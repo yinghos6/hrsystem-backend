@@ -1,6 +1,7 @@
 package com.example.hr_system.controller;
 
 import com.example.hr_system.entity.Employee;
+import com.example.hr_system.entity.PayrollRecord;
 import com.example.hr_system.payload.request.payroll.PayrollRecordDTO;
 import com.example.hr_system.payload.response.MessageResponse;
 import com.example.hr_system.service.*;
@@ -8,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -56,4 +59,8 @@ public class PayrollController {
         return new ResponseEntity<MessageResponse>(response, HttpStatus.CREATED);
     }
 
+    @GetMapping("/{id}/allPayrollRecord")
+    public List<PayrollRecord> getAllEmployeePayrollRecord(@PathVariable(value = "id")long id){
+       return payrollService.findAllPayrollRecordByEmployeeID(id);
+    }
 }
