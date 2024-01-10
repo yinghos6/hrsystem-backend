@@ -25,18 +25,28 @@ public class EmployeeController {
     @Autowired
     private LeaveService leaveService;
 
+    @Autowired
     private ShopService shopService;
 
+    @Autowired
     private DepartmentService departmentService;
 
-
+    @Autowired
     private PositionService positionService;
 
-    public EmployeeController(EmployeeService employeeService, ShopService shopService, DepartmentService departmentService, PositionService positionService) {
+    @Autowired
+    private PayrollService payrollService;
+
+    public EmployeeController() {
+    }
+
+    public EmployeeController(EmployeeService employeeService, LeaveService leaveService, ShopService shopService, DepartmentService departmentService, PositionService positionService, PayrollService payrollService) {
         this.employeeService = employeeService;
+        this.leaveService = leaveService;
         this.shopService = shopService;
         this.departmentService = departmentService;
         this.positionService = positionService;
+        this.payrollService = payrollService;
     }
 
     @GetMapping("/getAllEmployee")
@@ -103,6 +113,8 @@ public class EmployeeController {
         employeeResponse.setMessage("The user: "+ newEmployee.getEnglish_Surname() +" "+newEmployee.getEnglish_Given_Name() +" is created successfully." );
 
         leaveService.createNewLeaveBalanceForNewEmployee(newEmployee.getId());
+
+        payrollService.createNewPayrollSalaryForNewEmployee(newEmployee.getId(), employeeRegisterformDTO.getPositionId());
 
         return new ResponseEntity<EmployeeRegisterformResponse>(employeeResponse, HttpStatus.CREATED);
     }

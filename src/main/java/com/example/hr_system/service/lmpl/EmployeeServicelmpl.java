@@ -69,7 +69,7 @@ public class EmployeeServicelmpl implements EmployeeService {
         newEmployee.setEnglish_Given_Name(employeeRegisterformDTO.getEng_given_name());
         newEmployee.setEmployment_date(employeeRegisterformDTO.getEmployment_date());
 
-        Shop shop = shopService.findShopById(employeeRegisterformDTO.getPositionId());
+        Shop shop = shopService.findShopById(employeeRegisterformDTO.getShopId());
         newEmployee.setShop(shop);
 
         Position position = positionService.findPositionById(employeeRegisterformDTO.getPositionId());
@@ -136,6 +136,7 @@ public class EmployeeServicelmpl implements EmployeeService {
     public Long countTotalEmployeeByActiveStatus(Long activeStatusID) {
         return employeeRepository.countEmployeeByActiveStatus(activeStatusID);
     }
+
 
 
 }

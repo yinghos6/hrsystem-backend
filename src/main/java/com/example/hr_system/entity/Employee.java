@@ -64,6 +64,10 @@ public class Employee {
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<LeaveRecord> leaveRecords = new HashSet<>();
 
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<PayrollSalary> payrollSalaries = new HashSet<>();
 
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<PayrollRecord> payrollRecords = new HashSet<>();
 
 }
