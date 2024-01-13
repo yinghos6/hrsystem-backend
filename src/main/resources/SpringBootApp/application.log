@@ -19905,3 +19905,6 @@ com.fasterxml.jackson.databind.exc.InvalidDefinitionException: No serializer fou
 2024-01-10T23:49:18.951+0800 WARN Cache miss for REQUEST dispatch to '/api/v1/payroll/58/getAllRecord' (previous null). Performing CorsConfiguration lookup. This is logged once only at WARN level, and every time at TRACE.
 2024-01-10T23:49:19.270+0800 WARN Cache miss for REQUEST dispatch to '/api/v1/employee/58' (previous null). Performing MatchableHandlerMapping lookup. This is logged once only at WARN level, and every time at TRACE.
 2024-01-10T23:50:13.814+0800 WARN Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource api/v1/payroll/48/getAllRecord.]
+2024-01-12T11:17:26.066+0800 WARN HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-01-12T11:17:26.069+0800 WARN HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2024-01-12T11:17:27.201+0800 WARN spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
